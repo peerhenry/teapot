@@ -19,7 +19,7 @@ class TeapotModel
     _modelMatrix = mat4f.translation(_pos);
     _modelMatrixSetter = modelMatrixSetter;
 
-    auto file = scoped!AssimpScene(assimp, "resources/venusl.obj", aiProcess_Triangulate);
+    auto file = scoped!AssimpScene(assimp, "resources/venusm.obj", aiProcess_Triangulate);
     auto scene = file.scene();
     auto mesh = scene.mMeshes[0];
 

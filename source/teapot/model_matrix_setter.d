@@ -6,7 +6,6 @@ class ModelMatrixSetter
 {
   private Camera _cam;
   private GLProgram _program;
-  string pvmName = "PVM";
 
   this(ISceneProgram sceneProgram, Camera camera)
   {
@@ -16,8 +15,15 @@ class ModelMatrixSetter
 
   void set(mat4f modelMatrix)
   {
+    _program.uniform( "ViewPosition" ).set( _cam.position );
+
     mat4f scaleMatrix = mat4f.scaling( vec3f(0.01, 0.01, 0.01) );
-    mat4f pvm = _cam.projection * _cam.view * modelMatrix * scaleMatrix;
-    _program.uniform( pvmName ).set( pvm ); // PVM
+    mat4f m = modelMatrix * scaleMatrix;
+    mat4f vm = _cam.view * m;
+    mat3f nm = cast(mat3f)m;
+    mat4f pvm = _cam.projection * vm;
+    _program.uniform( "Model" ).set( m );
+    _program.uniform( "NormalMatrix" ).set( nm );
+    _program.uniform( "PVM" ).set( pvm );
   }
 }
