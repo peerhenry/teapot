@@ -1,5 +1,6 @@
 import gfm.math, gfm.sdl2;
 import engine;
+import teapot_scene;
 
 class InputHandler
 {
@@ -9,14 +10,16 @@ class InputHandler
     int prev_x;
     int prev_y;
     Camera _cam;
+    TeapotScene _scene;
   }
 
-  this(Context context, Camera cam)
+  this(Context context, Camera cam, TeapotScene scene)
   {
     this.sdl = context.sdl;
     _cam = cam;
     this.sdl.mouse.startCapture();
     SDL_SetRelativeMouseMode(true);
+    _scene = scene;
   }
 
   void update()
@@ -66,8 +69,23 @@ class InputHandler
     }
   }
 
+  bool tab_was_down = false;
+
   private void updateKeys()
   {
+    if(sdl.keyboard.isPressed(SDLK_TAB))
+    {
+      if(!tab_was_down)
+      {
+        _scene.tabModel();
+      }
+      tab_was_down = true;
+    }
+    else if(tab_was_down)
+    {
+      tab_was_down = false;
+    }
+
     // MOVEMENT
     bool f = sdl.keyboard.isPressed(SDLK_a);
     bool b = sdl.keyboard.isPressed(SDLK_z);

@@ -1,3 +1,4 @@
+import std.stdio;
 import std.typecons : scoped;
 import gfm.math, gfm.opengl, gfm.assimp;
 import engine;
@@ -27,7 +28,7 @@ class TeapotModel
     _sceneProgram = sceneProgram;
     _modelMatrixSetter = modelMatrixSetter;
     _assimp = assimp;
-    _scale = 0.01;
+    _scale = 10.0;//0.01;
     setPosition(0,0,0);
   }
 
@@ -43,15 +44,23 @@ class TeapotModel
     _scale = 0.01;
     _modelMatrix = mat4f.translation(_pos) * mat4f.scaling( vec3f(_scale, _scale, _scale) );
   }
-
+  
   void loadModel(string path)
   {
+    writeln("loading model: ", path);
     if(_model !is null) _model.destroy;
-    auto file = scoped!AssimpScene(_assimp, path, aiProcess_Triangulate);
+    //auto file = scoped!AssimpScene(_assimp, path, aiProcess_Triangulate);
+    //auto file = scoped!AssimpScene(_assimp, path, aiProcess_JoinIdenticalVertices);
+    auto file = scoped!AssimpScene(_assimp, path, aiProcess_GenSmoothNormals);
+    writeln("file loaded.");
+    //file.applyPostProcessing(aiProcess_GenSmoothNormals);
+    file.applyPostProcessing(aiProcess_JoinIdenticalVertices);
+    file.applyPostProcessing(aiProcess_ValidateDataStructure);
     auto scene = file.scene();
     auto mesh = scene.mMeshes[0];
     float lowestZ = 99999999.0;
     VertexPN[] vertices;
+    writeln("it has ", mesh.mNumVertices, " vertices.");
     foreach(vidx; 0..mesh.mNumVertices)
     {
       auto vertex = mesh.mVertices[vidx];

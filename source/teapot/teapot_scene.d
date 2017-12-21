@@ -6,6 +6,13 @@ class TeapotScene
     ISceneProgram _sceneProgram;
     Floor _floor;
     TeapotModel _teapot;
+    string[] _models = [
+      //"resources/objects/teapot.obj" // doesn't work yet...
+      "resources/objects/ateneam.obj"
+      , "resources/objects/elepham.obj"
+      , "resources/objects/venusm.obj"
+    ];
+    int _index = 0;
   }
 
   this(ISceneProgram sceneProgram, TeapotModel teapot, Floor floor)
@@ -13,7 +20,13 @@ class TeapotScene
     _sceneProgram = sceneProgram;
     _teapot = teapot;
     _floor = floor;
-    _teapot.loadModel("resources/venusm.obj");
+    _teapot.loadModel(_models[0]);
+  }
+
+  void tabModel()
+  {
+    _index = (_index+1) % _models.length;
+    _teapot.loadModel(_models[_index]);
   }
 
   ~this()
