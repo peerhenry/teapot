@@ -1,0 +1,14 @@
+.dub
+docs.json
+__dummy.html
+docs/
+teapot.so
+teapot.dylib
+teapot.dll
+teapot.a
+teapot.lib
+teapot-test-*
+*.exe
+*.o
+*.obj
+*.lst

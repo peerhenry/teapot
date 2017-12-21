@@ -1,0 +1,16 @@
+{
+	"name": "teapot",
+	"authors": [
+		"peerh"
+	],
+	"description": "OpenGL shading",
+	"copyright": "Copyright © 2017, peerh",
+	"license": "proprietary",
+	"targetType": "executable",
+	"targetPath": "bin",
+	"dependencies": {
+		"poodinis": "~>8.0.1",
+		"gfm": "~>6.2.12",
+		"imageformats": "~>6.1.2"
+	}
+}
