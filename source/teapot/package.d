@@ -8,3 +8,4 @@ public import phong_program;
 public import teapot_model;
 public import teapot_scene;
 public import model_matrix_setter;
+public import floor;

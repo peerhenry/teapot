@@ -36,6 +36,7 @@ shared(DependencyContainer) bootstrap()
 	container.register!Assimp;
 	container.register!ModelMatrixSetter;
 	container.register!TeapotModel;
+	container.register!Floor;
 	container.register!TeapotScene;
 	
 	container.register!(Game, TeapotGame);

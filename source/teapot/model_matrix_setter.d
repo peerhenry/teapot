@@ -16,9 +16,7 @@ class ModelMatrixSetter
   void set(mat4f modelMatrix)
   {
     _program.uniform( "ViewPosition" ).set( _cam.position );
-
-    mat4f scaleMatrix = mat4f.scaling( vec3f(0.01, 0.01, 0.01) );
-    mat4f m = modelMatrix * scaleMatrix;
+    mat4f m = modelMatrix;
     mat4f vm = _cam.view * m;
     mat3f nm = cast(mat3f)m;
     mat4f pvm = _cam.projection * vm;
