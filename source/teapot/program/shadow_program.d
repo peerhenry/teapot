@@ -11,8 +11,11 @@ class ShadowProgram : BaseProgram
   int shadowMapWith, shadowMapHeight;
   UniformSetter _setter;
 
-  this(OpenGL gl, UniformSetter setter)
+  import std.stdio;
+
+  this(OpenGL gl)
   {
+    writeln("shadow program constructor");
     string[] shader_source = readLines("source/teapot/glsl/shadow.glsl");
     _program = new GLProgram(gl, shader_source);
     spec = new VertexSpecification!VertexPN(_program);
@@ -21,6 +24,12 @@ class ShadowProgram : BaseProgram
     createFBO(gl);
     shadowMapWith = 1024;
     shadowMapHeight = 1024;
+    writeln("end of shadow program constructor");
+  }
+
+  void setUniformSetter(UniformSetter setter)
+  {
+    writeln("setting uniform setter...");
     _setter = setter;
   }
 
@@ -59,6 +68,7 @@ class ShadowProgram : BaseProgram
 
   private void initUniforms()
   {
+    writeln("shadow program initUniforms");
     vec3f lightDir = vec3f(-0.8, 0.3, -1.0);
     mat4f shadowMatrix = mat4f.identity(); // B*P*V*M
     _program.uniform("LightDirection").set( lightDir.normalized() );
@@ -74,12 +84,14 @@ class ShadowProgram : BaseProgram
     _program.uniform("MaterialShininess").set( shiny );
     _program.uniform("ShadowMatrix").set( shadowMatrix );
     // get subroutine handles
+    writeln("getting subroutines...");
     _recDepth = glGetSubroutineIndex(_program.handle, GL_FRAGMENT_SHADER, "recordDepth");
     _shade = glGetSubroutineIndex(_program.handle, GL_FRAGMENT_SHADER, "shadeWithShadow");
   }
 
   private void createShadowMapTex(OpenGL gl)
   {
+    writeln("createShadowMapTex");
     float[] border = [1.0,0.0,0.0,0.0];
     _tex = new GLTexture2D(gl);
     _tex.setImage(0, GL_DEPTH_COMPONENT, shadowMapWith,shadowMapHeight, 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, null);
@@ -88,8 +100,8 @@ class ShadowProgram : BaseProgram
     _tex.setWrapS(GL_CLAMP_TO_BORDER);
     _tex.setWrapT(GL_CLAMP_TO_BORDER);
 
-    //_tex.setBorderColor(border);
-    //glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, &border);
+    // _tex.setBorderColor(border);
+    // glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, &border);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_REF_TO_TEXTURE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LESS);
     _tex.use(GL_TEXTURE0);
@@ -97,6 +109,7 @@ class ShadowProgram : BaseProgram
 
   private void createFBO(OpenGL gl)
   {
+    writeln("createFBO");
     _fbo = new GLFBO(gl);
     _fbo.depth.attach(_tex);
   }

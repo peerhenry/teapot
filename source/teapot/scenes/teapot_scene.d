@@ -12,7 +12,7 @@ class TeapotScene
 {
   private{
     ISceneProgram _sceneProgram;
-    ISceneProgram _shadowProgram;
+    //ISceneProgram _shadowProgram;
     Floor _floor;
     GameObject[] _models;
     GameObject _activeModel;

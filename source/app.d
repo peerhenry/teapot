@@ -34,6 +34,7 @@ shared(DependencyContainer) bootstrap()
 
 	container.register!DirectionalLight;
 	container.register!(ISceneProgram, PhongProgram);
+	//container.register!(ISceneProgram, ShadowProgram);
 	container.register!Assimp;
 	container.register!UniformSetter;
 	container.register!Floor;

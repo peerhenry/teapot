@@ -17,6 +17,7 @@ class UniformSetter
     _cam = camera;
     _program = sceneProgram.program;
     _light = light;
+    sceneProgram.setUniformSetter(this);
   }
 
   void setShadowState()
@@ -54,5 +55,6 @@ class UniformSetter
     mat4f pvm = _light.pv * m;
     _program.uniform( "Model" ).set( m );
     _program.uniform( "PVM" ).set( pvm );
+    _program.uniform( "ShadowMatrix" ).set(pvm);
   }
 }

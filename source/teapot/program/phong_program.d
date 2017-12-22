@@ -1,6 +1,6 @@
 import gfm.opengl, gfm.math;
 import engine;
-import scene_program;
+import scene_program, uniform_setter;
 
 
 class PhongProgram: ISceneProgram
@@ -19,6 +19,8 @@ class PhongProgram: ISceneProgram
     createProgram(gl);
     initUniforms();
   }
+
+  void setUniformSetter(UniformSetter setter){}
 
   private void createProgram(OpenGL gl)
   {
