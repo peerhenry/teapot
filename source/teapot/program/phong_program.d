@@ -1,12 +1,7 @@
 import gfm.opengl, gfm.math;
 import engine;
+import scene_program;
 
-interface ISceneProgram
-{
-  @property GLProgram program();
-  @property VertexSpecification!VertexPN vertexSpec();
-  void setUniforms();
-}
 
 class PhongProgram: ISceneProgram
 {
@@ -27,7 +22,6 @@ class PhongProgram: ISceneProgram
 
   private void createProgram(OpenGL gl)
   {
-    // dispense with loading and compiling of individual shaders
     string[] shader_source = readLines("source/teapot/glsl/phong.glsl");
     _program = new GLProgram(gl, shader_source);
     spec = new VertexSpecification!VertexPN(_program);
@@ -44,7 +38,7 @@ class PhongProgram: ISceneProgram
     _program.uniform("Model").set( mat4f.identity );
     _program.uniform("ViewPosition").set( vec3f(0,0,0) );
     _program.uniform("NormalMatrix").set( mat3f.identity );
-    float shiny = 32.0;
+    float shiny = 64.0;
     _program.uniform("MaterialShininess").set( shiny );
   }
 
@@ -54,8 +48,10 @@ class PhongProgram: ISceneProgram
     spec.destroy;
   }
 
-  void setUniforms()
+  void render(void delegate() renderScene)
   {
-    //texture.bind();
+    _program.use();
+    renderScene();
+    _program.unuse();
   }
 }

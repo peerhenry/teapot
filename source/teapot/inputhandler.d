@@ -133,7 +133,7 @@ class InputHandler
     if(isMoving)
     {
       movedir.fastNormalize();
-      vec3f ds = 1*movedir;
+      vec3f ds = 0.5*movedir;
       _cam.translate(ds);
     }
   }

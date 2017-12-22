@@ -9,8 +9,5 @@ public import mesh;
 public import model;
 public import pointmodel;
 public import hexahedron;
-public import pvm_setter;
-public import pvm_model_setter;
-public import pvm_normalmatrix_setter;
 public import texture;
 public import cubemap;

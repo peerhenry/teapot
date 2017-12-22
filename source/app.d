@@ -32,10 +32,10 @@ shared(DependencyContainer) bootstrap()
 
 	container.register!InputHandler;
 
+	container.register!DirectionalLight;
 	container.register!(ISceneProgram, PhongProgram);
 	container.register!Assimp;
-	container.register!ModelMatrixSetter;
-	container.register!TeapotModel;
+	container.register!UniformSetter;
 	container.register!Floor;
 	container.register!TeapotScene;
 	
